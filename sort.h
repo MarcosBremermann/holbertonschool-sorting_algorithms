@@ -2,6 +2,7 @@
 #define SORT_H
 
 #include <stddef.h>
+
 /*
 * struct listint_s - Singly linked list node
 * @n: integer stored in the node

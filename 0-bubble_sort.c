@@ -1,7 +1,7 @@
 #include "sort.h"
 #include <stddef.h>
 /**
- * function that sorts array of integers using the bubble sort algorithm
+ * bubble_sort - function that sorts using the bubble sort algorithm
  * @array: the array to be sorted
  * @size: size of the array
 */
