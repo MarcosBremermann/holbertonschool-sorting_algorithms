@@ -5,37 +5,28 @@
 */
 void insertion_sort_list(listint_t **list)
 {
-	listint_t *current, *sorted, *next;
+	listint_t *anode, *temp, *nodprev;
 
-	if (list == NULL || *list == NULL || (*list)->next == NULL)
-	{
+	if (!list || !*list)
 		return;
-	}
-
-	current = *list;
-	while (current)
+	anode = *list;
+	while ((anode = anode->next))
 	{
-		sorted = current->next;
-		next = current->next;
-
-		while (sorted && sorted->prev && sorted->n < sorted->prev->n)
+		temp = anode;
+		while (anode->prev && (anode->n < anode->prev->n))
 		{
-			sorted->next ? (sorted->next->prev = sorted->prev) : 0;
-			sorted->prev->next = sorted->next;
-			sorted->next = sorted->prev;
-			sorted->prev = sorted->prev->next;
-			sorted->next->prev = sorted;
-			sorted->prev ? (sorted->prev->next = sorted) : (*list = sorted);
-			sorted->next->next ? (sorted->next->next->prev = sorted->next) : 0;
-			sorted->next->next = sorted;
-			sorted->prev ? (current = sorted->prev) : (current = sorted);
-		}
-
-		if (current)
-		{
+			nodprev = temp->prev;
+			if (temp->next)
+				temp->next->prev = nodprev;
+			if (nodprev->prev)
+				nodprev->prev->next = temp;
+			else
+				*list = temp;
+			nodprev->next = temp->next;
+			temp->prev = nodprev->prev;
+			temp->next = nodprev;
+			nodprev->prev = temp;
 			print_list(*list);
 		}
-
-		current = next;
 	}
 }
