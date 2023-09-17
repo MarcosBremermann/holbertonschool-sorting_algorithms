@@ -1,58 +1,54 @@
 #include "sort.h"
-/**
- * lomuto_partition - scheme of lomuto partition
- *
- * @array: array to be sorted
- * @low: lowest index of the partition
- * @high: highest index of the partition
- * @size: size of the array
- *
- * Return: Index of the pivot
-*/
-int lomuto_partition(int *array, int low, int high, size_t size)
-{
-	int pivot = array[high];
-	int i = low - 1;
-	int j, temp;
 
-	for (j = low; j <= high - 1; j++)
+/**
+ * qs - qs
+ * @array: array
+ * @limite_left: left limit
+ * @limite_right: right llimit
+ * @size: size of array
+ */
+
+void qs(int *array, int limite_left, int limite_right, size_t size)
+{
+	int left, right, temporal, pivot;
+
+	left = limite_left;
+	right = limite_right;
+	pivot = array[right];
+
+	while (left <= right)
 	{
-		if (array[j] < pivot)
+		while (array[left] < pivot && left < limite_right)
 		{
-			i++;
-			temp = array[i];
-			array[i] = array[j];
-			array[j] = temp;
-			print_array(array, size);
+			left++;
+		}
+		while (pivot < array[right] && right > limite_left)
+		{
+			right--;
+		}
+
+		if (left <= right)
+		{
+			temporal = array[left];
+			array[left] = array[right];
+			array[right] = temporal;
+			if (array[left] != array[right])
+			{
+				print_array(array, size);
+			}
+			left++;
+			right--;
 		}
 	}
 
-
-	temp = array[i + 1];
-
-	array[i + 1] = array[high];
-	array[high] = temp;
-	print_array(array, size);
-
-	return (i + 1);
-}
-
-/**
- * quick_sort1 - recursive function to perform the quick sorting
- *
- * @array: array to be sorted
- * @low: lowest index of the partition
- * @high: highest index of the partition
- * @size: size of the array
-*/
-void quick_sort1(int *array, int low, int high, size_t size)
-{
-	if (low < high)
+	if (limite_left < right)
 	{
-		int pivot_index = lomuto_partition(array, low, high, size);
+		qs(array, limite_left, right, size);
+	}
 
-		quick_sort1(array, low, pivot_index - 1, size);
-		quick_sort1(array, pivot_index + 1, high, size);
+	if (limite_right > left)
+	{
+		qs(array, left, limite_right, size);
 	}
 }
 
@@ -63,10 +59,10 @@ void quick_sort1(int *array, int low, int high, size_t size)
 */
 void quick_sort(int *array, size_t size)
 {
-	if (array == NULL || size < 2)
+	if (array == NULL || size == 0)
 	{
 		return;
 	}
 
-	quick_sort1(array, 0, size - 1, size);
+	qs(array, 0, size - 1, size);
 }
