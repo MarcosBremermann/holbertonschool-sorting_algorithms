@@ -26,7 +26,6 @@ void swap_nodes(listint_t *current, listint_t **list)
  *                        order.
  * @list: Head of the linked list
  */
-
 void insertion_sort_list(listint_t **list)
 {
 	listint_t *current;
